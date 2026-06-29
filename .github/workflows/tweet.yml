@@ -9,7 +9,7 @@ jobs:
   run-agent:
     runs-on: ubuntu-latest
     steps:
-      - name: Créer session et envoyer message
+      - name: Créer session et envoyer messagez
         run: |
           SESSION=$(curl -s -X POST https://api.anthropic.com/v1/sessions \
             -H "x-api-key: ${{ secrets.ANTHROPIC_API_KEY }}" \
