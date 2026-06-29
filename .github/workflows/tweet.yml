@@ -8,23 +8,17 @@ on:
 jobs:
   run-agent:
     runs-on: ubuntu-latest
-
     steps:
       - name: Créer session et envoyer message
         run: |
-          # Étape 1 : Créer une session
           SESSION=$(curl -s -X POST https://api.anthropic.com/v1/sessions \
             -H "x-api-key: ${{ secrets.ANTHROPIC_API_KEY }}" \
             -H "anthropic-version: 2023-06-01" \
             -H "anthropic-beta: sessions-2025-05-14" \
             -H "Content-Type: application/json" \
             -d '{"agent_id": "agent_01RHCXW3qz6xwmENMpNLx7ZS"}')
-          
-          echo "Réponse session: $SESSION"
+          echo "Session: $SESSION"
           SESSION_ID=$(echo $SESSION | grep -o '"id":"[^"]*"' | head -1 | cut -d'"' -f4)
-          echo "Session ID: $SESSION_ID"
-          
-          # Étape 2 : Envoyer le message
           curl -s -X POST "https://api.anthropic.com/v1/sessions/$SESSION_ID/events" \
             -H "x-api-key: ${{ secrets.ANTHROPIC_API_KEY }}" \
             -H "anthropic-version: 2023-06-01" \
